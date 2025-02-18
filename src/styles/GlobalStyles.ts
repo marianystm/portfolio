@@ -5,9 +5,9 @@ export const GlobalStyles = createGlobalStyle`
     --primary-color: #2A2A2A;
     --secondary-color: #4A90E2;
     --accent-color: #E94E77;
-    --background-color: #1A1A1A;
-    --text-color: #FFFFFF;
-    --text-secondary: #B3B3B3;
+    --background-color: #ffe6e3;
+    --text-color: #2A2A2A;
+    --text-secondary: #666666;
   }
 
   * {

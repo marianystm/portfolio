@@ -1,12 +1,5 @@
-import { HomeWrapper, HeroSection, Title, Subtitle } from "./Home.styled";
+import { HomeWrapper } from "./Home.styled.ts";
 
 export const Home = () => {
-  return (
-    <HomeWrapper>
-      <HeroSection>
-        <Title>Maria Nyström</Title>
-        <Subtitle>Frontend Developer</Subtitle>
-      </HeroSection>
-    </HomeWrapper>
-  );
+  return <HomeWrapper />;
 };
