@@ -1,10 +1,19 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+  
+  @font-face {
+    font-family: 'Anton';
+    src: url('/src/assets/fonts/Anton_Complete/Anton-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   :root {
     --primary-color: #2A2A2A;
     --secondary-color: #4A90E2;
-    --accent-color: #E94E77;
+    --accent-color: #ff2727;
     --background-color: #ffe6e3;
     --text-color: #2A2A2A;
     --text-secondary: #666666;
@@ -17,7 +26,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
     -webkit-font-smoothing: antialiased;

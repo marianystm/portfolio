@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 const fadeIn = keyframes`
   from {
@@ -6,6 +6,15 @@ const fadeIn = keyframes`
   }
   to {
     opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 `;
 
@@ -96,7 +105,11 @@ export const MenuButton = styled.button<MenuButtonProps>`
   `}
 `;
 
-export const MenuItems = styled.div`
+interface MenuItemsProps {
+  $isOpen: boolean;
+}
+
+export const MenuItems = styled.div<MenuItemsProps>`
   position: absolute;
   top: 100%;
   left: 50%;
@@ -108,10 +121,9 @@ export const MenuItems = styled.div`
   justify-content: flex-start;
   gap: 4rem;
   z-index: 1000;
-  opacity: 0;
   padding-top: 4rem;
   min-width: 300px;
-  animation: ${fadeIn} 0.7s ease forwards;
+  animation: ${({ $isOpen }) => ($isOpen ? fadeIn : fadeOut)} 0.3s ease forwards;
 
   &::before {
     content: "";
@@ -119,7 +131,8 @@ export const MenuItems = styled.div`
     inset: 0;
     background-color: var(--background-color);
     z-index: -1;
-    animation: ${fadeIn} 0.5s ease forwards;
+    animation: ${({ $isOpen }) => ($isOpen ? fadeIn : fadeOut)} 0.3s ease
+      forwards;
   }
 `;
 

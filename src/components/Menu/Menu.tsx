@@ -9,6 +9,7 @@ import {
 
 export const Menu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -23,9 +24,22 @@ export const Menu = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      setIsAnimating(true);
+    } else {
+      const timer = setTimeout(() => {
+        setIsAnimating(false);
+      }, 300); // Match animation duration
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
   const handleNavigation = (path: string) => {
-    navigate(path);
     setIsOpen(false);
+    setTimeout(() => {
+      navigate(path);
+    }, 300); // Match animation duration
   };
 
   return (
@@ -35,8 +49,8 @@ export const Menu = () => {
         <span></span>
       </MenuButton>
 
-      {isOpen && (
-        <MenuItems>
+      {(isOpen || isAnimating) && (
+        <MenuItems $isOpen={isOpen}>
           <MenuItem onClick={() => handleNavigation("/")}>Home</MenuItem>
           <MenuItem onClick={() => handleNavigation("/projects")}>
             Projects
