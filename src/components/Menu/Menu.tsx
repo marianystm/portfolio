@@ -50,14 +50,21 @@ export const Menu = () => {
   }, []);
 
   const handleNavigation = (path: string) => {
-    navigate(path);
+    setIsOpen(false);
     setTimeout(() => {
-      setIsOpen(false);
-    }, 100);
+      navigate(path);
+    }, 950);
   };
 
   const handleMenuToggle = () => {
-    setIsOpen(!isOpen);
+    if (isOpen) {
+      setIsOpen(false);
+      setTimeout(() => {
+        navigate("/");
+      }, 950);
+    } else {
+      setIsOpen(true);
+    }
   };
 
   return (

@@ -21,7 +21,7 @@ const fadeOut = keyframes`
 const slideIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(50px);
   }
   to {
     opacity: 1;
@@ -30,13 +30,13 @@ const slideIn = keyframes`
 `;
 
 const slideOut = keyframes`
-  from {
+  0% {
     opacity: 1;
     transform: translateY(0);
   }
-  to {
+  100% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(-40px);
   }
 `;
 
@@ -152,17 +152,11 @@ export const MenuItems = styled.div<{ $isOpen: boolean }>`
   justify-content: center;
   gap: 0.5rem;
   margin-top: -4rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.8s ease;
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  pointer-events: ${({ $isOpen }) => ($isOpen ? "all" : "none")};
   overflow: hidden;
-
-  ${({ $isOpen }) =>
-    $isOpen &&
-    `
-    opacity: 1;
-    pointer-events: all;
-  `}
+  transition: opacity 0.6s ease-in-out;
+  transition-delay: ${({ $isOpen }) => ($isOpen ? "0s" : "0.1s")};
 `;
 
 interface MenuItemProps {
@@ -178,20 +172,34 @@ export const MenuItem = styled.button<MenuItemProps>`
   background: none;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
   text-align: center;
   padding: 0;
-  opacity: 0;
   text-transform: uppercase;
-  animation: ${css`
-      ${slideIn}`} 0.7s ease-out forwards;
   display: inline-block;
+  will-change: transform, opacity;
+  transform: translateY(50px);
+  opacity: 0;
 
   ${({ $isOpen }) =>
-    $isOpen &&
-    css`
-      animation: ${slideIn} 0.7s ease-out forwards;
-    `}
+    $isOpen
+      ? css`
+          animation: ${slideIn} 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        `
+      : css`
+          opacity: ${$isOpen ? 1 : 0};
+          transition: opacity 0.7s ease-in-out;
+          transition-delay: 0.1s;
+        `}
+
+  &:nth-child(3) {
+    animation-delay: ${({ $isOpen }) => ($isOpen ? "0.8s" : "0s")};
+  }
+  &:nth-child(2) {
+    animation-delay: ${({ $isOpen }) => ($isOpen ? "0.6s" : "0s")};
+  }
+  &:nth-child(1) {
+    animation-delay: ${({ $isOpen }) => ($isOpen ? "0.4s" : "0s")};
+  }
 
   span {
     display: inline-block;
@@ -263,15 +271,5 @@ export const MenuItem = styled.button<MenuItemProps>`
     &:hover span:nth-last-child(8) {
       animation-delay: 0.56s;
     }
-  }
-
-  &:nth-child(1) {
-    animation-delay: 0.3s;
-  }
-  &:nth-child(2) {
-    animation-delay: 0.4s;
-  }
-  &:nth-child(3) {
-    animation-delay: 0.5s;
   }
 `;
