@@ -52,21 +52,12 @@ export const Menu = () => {
   }, []);
 
   const handleNavigation = (path: string) => {
+    navigate(path);
     setIsOpen(false);
-    setTimeout(() => {
-      navigate(path);
-    }, 950);
   };
 
   const handleMenuToggle = () => {
-    if (isOpen) {
-      setIsOpen(false);
-      setTimeout(() => {
-        navigate("/");
-      }, 950);
-    } else {
-      setIsOpen(true);
-    }
+    setIsOpen(!isOpen);
   };
 
   return (
