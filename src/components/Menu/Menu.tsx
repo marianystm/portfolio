@@ -5,11 +5,13 @@ import {
   MenuButton,
   MenuItems,
   MenuItem,
+  SocialLinks,
+  SocialLink,
 } from "./Menu.styled.ts";
 
 const wrapLetters = (text: string) => {
   return text.split("").map((letter, index) => (
-    <span key={index} data-index={index}>
+    <span key={index} data-index={index} data-letter={letter}>
       {letter}
     </span>
   ));
@@ -98,6 +100,26 @@ export const Menu = () => {
         >
           {wrapLetters("Contact")}
         </MenuItem>
+        <SocialLinks $isOpen={isOpen}>
+          <SocialLink
+            href="https://github.com/yourusername"
+            target="_blank"
+            rel="noopener noreferrer"
+            $direction="up"
+            $isOpen={isOpen}
+          >
+            {wrapLetters("GITHUB")}
+          </SocialLink>
+          <SocialLink
+            href="https://linkedin.com/in/yourusername"
+            target="_blank"
+            rel="noopener noreferrer"
+            $direction="down"
+            $isOpen={isOpen}
+          >
+            {wrapLetters("LINKEDIN")}
+          </SocialLink>
+        </SocialLinks>
       </MenuItems>
     </MenuContainer>
   );

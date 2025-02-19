@@ -21,11 +21,11 @@ const fadeOut = keyframes`
 const slideIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(50px) rotate(-4deg) skew(-2deg);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) rotate(0deg) skew(0deg);
   }
 `;
 
@@ -52,6 +52,73 @@ const letterAnimation = keyframes`
   50%, 100% {
     transform: translateY(0);
     opacity: 1;
+  }
+`;
+
+const floatUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const floatDown = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const freeze = keyframes`
+  0% {
+    transform: translateY(0) translateX(0) rotate(0);
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(0);
+    color: var(--accent-color);
+  }
+`;
+
+const appear = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    color: var(--accent-color);
+  }
+`;
+
+const drop = keyframes`
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200px);
+    opacity: 0;
+  }
+`;
+
+const pulse = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    color: var(--accent-color);
+  }
+  100% {
+    transform: scale(1);
+    color: var(--primary-color);
   }
 `;
 
@@ -271,5 +338,73 @@ export const MenuItem = styled.button<MenuItemProps>`
     &:hover span:nth-last-child(8) {
       animation-delay: 0.56s;
     }
+  }
+`;
+
+interface OpenProps {
+  $isOpen: boolean;
+}
+
+export const SocialLinks = styled.div<OpenProps>`
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  gap: 6rem;
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  pointer-events: ${({ $isOpen }) => ($isOpen ? "all" : "none")};
+`;
+
+export const SocialLink = styled.a<{
+  $direction: "up" | "down";
+  $isOpen: boolean;
+}>`
+  font-family: "Poppins";
+  font-size: 1.5rem;
+  font-weight: 200;
+  color: var(--primary-color);
+  text-decoration: none;
+  letter-spacing: 1px;
+  opacity: 0;
+
+  ${({ $isOpen, $direction }) =>
+    $isOpen &&
+    css`
+      animation: ${$direction === "up" ? floatUp : floatDown} 1.8s
+        cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 0.4s;
+    `}
+
+  span {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover span {
+    animation: ${drop} 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  &:hover span:nth-child(6) {
+    animation-delay: 0.5s;
+  }
+  &:hover span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  &:hover span:nth-child(4) {
+    animation-delay: 0.7s;
+  }
+  &:hover span:nth-child(1) {
+    animation-delay: 0.3s;
+  }
+  &:hover span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  &:hover span:nth-child(5) {
+    animation-delay: 0s;
+  }
+  &:hover span:nth-child(7) {
+    animation-delay: 0.6s;
+  }
+  &:hover span:nth-child(8) {
+    animation-delay: 0.25s;
   }
 `;
