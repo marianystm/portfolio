@@ -11,11 +11,11 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   :root {
-    --primary-color: #2A2A2A;
+    --primary-color: #4d0000;
     --secondary-color: #4A90E2;
     --accent-color: #ff2727;
     --background-color: #ffe6e3;
-    --text-color: #2A2A2A;
+    --text-color: #4d0000;
     --text-secondary: #666666;
   }
 
