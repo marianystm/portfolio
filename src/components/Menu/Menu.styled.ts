@@ -1,23 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-`;
-
 const slideIn = keyframes`
   from {
     opacity: 0;
@@ -26,17 +8,6 @@ const slideIn = keyframes`
   to {
     opacity: 1;
     transform: translateY(0) rotate(0deg) skew(0deg);
-  }
-`;
-
-const slideOut = keyframes`
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-40px);
   }
 `;
 
@@ -77,26 +48,6 @@ const floatDown = keyframes`
   }
 `;
 
-const freeze = keyframes`
-  0% {
-    transform: translateY(0) translateX(0) rotate(0);
-  }
-  100% {
-    transform: translateY(0) translateX(0) rotate(0);
-    color: var(--accent-color);
-  }
-`;
-
-const appear = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-    color: var(--accent-color);
-  }
-`;
-
 const drop = keyframes`
   0% {
     transform: translateY(0);
@@ -105,20 +56,6 @@ const drop = keyframes`
   100% {
     transform: translateY(200px);
     opacity: 0;
-  }
-`;
-
-const pulse = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-    color: var(--accent-color);
-  }
-  100% {
-    transform: scale(1);
-    color: var(--primary-color);
   }
 `;
 
