@@ -11,14 +11,22 @@ import {
   SocialLinks,
   SocialLink,
 } from "./Contact.styled";
+import { AnimatedUnderline } from "../../components/AnimatedUnderline/AnimatedUnderline";
 
 export const Contact = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isCopied, setIsCopied] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isEmailHovered, setIsEmailHovered] = useState(false);
+  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const emailLinkRef = useRef<HTMLDivElement>(null);
   const circleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const emailAnimationRef = useRef<NodeJS.Timeout | null>(null);
+  const socialAnimationRefs = useRef<{ [key: string]: NodeJS.Timeout | null }>({
+    linkedin: null,
+    github: null,
+  });
 
   const handleCopyEmail = () => {
     const email = "maria.nystm@gmail.com";
@@ -46,6 +54,7 @@ export const Contact = () => {
   const handleMouseEnter = () => {
     setIsVisible(true);
     setIsHovering(true);
+    setIsEmailHovered(true);
 
     if (circleTimeoutRef.current) {
       clearTimeout(circleTimeoutRef.current);
@@ -55,10 +64,29 @@ export const Contact = () => {
 
   const handleMouseLeave = () => {
     setIsHovering(false);
+    setIsEmailHovered(false);
     // Låt cirkeln vara synlig en stund efter att musen lämnat för att fade-effekten ska synas
     circleTimeoutRef.current = setTimeout(() => {
       setIsVisible(false);
     }, 300); // Matchar transition-tiden i CSS
+  };
+
+  const handleSocialMouseEnter = (social: string) => {
+    setHoveredSocial(social);
+
+    // Rensa eventuell tidigare timeout för denna sociala länk
+    if (socialAnimationRefs.current[social]) {
+      clearTimeout(socialAnimationRefs.current[social]);
+    }
+  };
+
+  const handleSocialMouseLeave = (social: string) => {
+    // Låt animationen slutföras innan vi tar bort hover-tillståndet
+    socialAnimationRefs.current[social] = setTimeout(() => {
+      if (hoveredSocial === social) {
+        setHoveredSocial(null);
+      }
+    }, 1500); // Matchar animationstiden
   };
 
   // Rensa timeout vid unmount
@@ -67,6 +95,12 @@ export const Contact = () => {
       if (circleTimeoutRef.current) {
         clearTimeout(circleTimeoutRef.current);
       }
+      if (emailAnimationRef.current) {
+        clearTimeout(emailAnimationRef.current);
+      }
+      Object.values(socialAnimationRefs.current).forEach((timeout) => {
+        if (timeout) clearTimeout(timeout);
+      });
     };
   }, []);
 
@@ -116,7 +150,14 @@ export const Contact = () => {
         >
           <EmailFirstPart>MARIA.NYSTM</EmailFirstPart>
           <EmailSecondPart>@GMAIL.COM</EmailSecondPart>
-          <div className="underline-animation"></div>
+          <AnimatedUnderline
+            width="100%"
+            color="var(--accent-color)"
+            hoverColor="#ff69b4"
+            height="10px"
+            className="email-underline"
+            isHovered={isEmailHovered}
+          />
         </EmailLink>
       </ContactContent>
 
@@ -127,15 +168,35 @@ export const Contact = () => {
             href="https://linkedin.com/in/yourusername"
             target="_blank"
             rel="noopener noreferrer"
+            onMouseEnter={() => handleSocialMouseEnter("linkedin")}
+            onMouseLeave={() => handleSocialMouseLeave("linkedin")}
           >
             LINKEDIN
+            <AnimatedUnderline
+              width="100%"
+              color="var(--accent-color)"
+              hoverColor="#ff69b4"
+              height="10px"
+              className="social-underline"
+              isHovered={hoveredSocial === "linkedin"}
+            />
           </SocialLink>
           <SocialLink
             href="https://github.com/yourusername"
             target="_blank"
             rel="noopener noreferrer"
+            onMouseEnter={() => handleSocialMouseEnter("github")}
+            onMouseLeave={() => handleSocialMouseLeave("github")}
           >
             GITHUB
+            <AnimatedUnderline
+              width="100%"
+              color="var(--accent-color)"
+              hoverColor="#ff69b4"
+              height="10px"
+              className="social-underline"
+              isHovered={hoveredSocial === "github"}
+            />
           </SocialLink>
         </SocialLinks>
       </SocialContent>

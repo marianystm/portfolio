@@ -122,44 +122,15 @@ export const EmailLink = styled.div`
     opacity: 0.8;
   }
 
-  /* Statisk understrykning */
+  /* Ta bort tidigare understrykning */
   &::after {
-    content: "";
-    position: absolute;
-    bottom: -15px;
-    left: 0;
+    content: none;
+  }
+
+  /* Anpassa styling för AnimatedUnderline */
+  .email-underline {
+    margin-top: 15px;
     width: 100%;
-    height: 5px;
-    background-color: var(--accent-color);
-    pointer-events: none;
-  }
-
-  /* Animerad rosa linje */
-  .underline-animation {
-    position: absolute;
-    bottom: -15px;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .underline-animation::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, #ff69b4, transparent);
-    opacity: 0;
-  }
-
-  &:hover .underline-animation::after {
-    opacity: 1;
-    animation: ${underlineSlide} 1.5s ease-in-out;
   }
 
   /* Cirkel-animation */
@@ -246,17 +217,30 @@ export const SocialLink = styled.a`
   font-family: "Anton";
   font-size: 8rem;
   color: var(--accent-color);
-  text-decoration: underline;
-  text-underline-offset: 15px;
-  text-decoration-thickness: 5px;
+  text-decoration: none;
   line-height: 1;
-  transition: transform 0.3s ease;
+  transition: opacity 0.3s ease;
   white-space: nowrap;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: -0.05em;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Ta bort tidigare understrykning */
+  text-decoration: none;
+  text-underline-offset: 0;
+  text-decoration-thickness: 0;
+
+  /* Anpassa styling för AnimatedUnderline */
+  .social-underline {
+    margin-top: 15px;
+    width: 100%;
+  }
 
   &:hover {
-    transform: scale(1.02);
+    opacity: 0.9;
   }
 `;
