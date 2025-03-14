@@ -93,7 +93,7 @@ export const Menu = () => {
         </MenuItem>
         <SocialLinks $isOpen={isOpen}>
           <SocialLink
-            href="https://github.com/yourusername"
+            href="https://github.com/marianystm"
             target="_blank"
             rel="noopener noreferrer"
             $direction="up"
@@ -102,7 +102,7 @@ export const Menu = () => {
             {wrapLetters("GITHUB")}
           </SocialLink>
           <SocialLink
-            href="https://linkedin.com/in/yourusername"
+            href="https://linkedin.com/in/maria-nyström-959444113"
             target="_blank"
             rel="noopener noreferrer"
             $direction="down"
