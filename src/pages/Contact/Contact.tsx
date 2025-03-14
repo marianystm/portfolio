@@ -18,8 +18,7 @@ export const Contact = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isFirstPartHovered, setIsFirstPartHovered] = useState(false);
-  const [isSecondPartHovered, setIsSecondPartHovered] = useState(false);
+  const [isEmailHovered, setIsEmailHovered] = useState(false);
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const emailLinkRef = useRef<HTMLDivElement>(null);
   const firstPartRef = useRef<HTMLDivElement>(null);
@@ -34,7 +33,7 @@ export const Contact = () => {
   const handleCopyEmail = () => {
     const email = "maria.nystm@gmail.com";
 
-    // Säkerställ att cirkeln är synlig och i hover-tillstånd när vi kopierar
+    // Ensure the circle is visible and in hover state when copying
     setIsVisible(true);
     setIsHovering(true);
     setIsCopied(true);
@@ -42,10 +41,10 @@ export const Contact = () => {
     navigator.clipboard
       .writeText(email)
       .then(() => {
-        // Behåll cirkeln synlig i 2 sekunder
+        // Keep the circle visible for 2 seconds
         setTimeout(() => {
           setIsCopied(false);
-          // Behåll hover-tillståndet om musen fortfarande är över länken
+          // Maintain hover state if mouse is still over the link
           if (!emailLinkRef.current?.matches(":hover")) {
             setIsHovering(false);
           }
@@ -71,6 +70,7 @@ export const Contact = () => {
   const handleMouseEnter = () => {
     setIsVisible(true);
     setIsHovering(true);
+    setIsEmailHovered(true);
 
     if (circleTimeoutRef.current) {
       clearTimeout(circleTimeoutRef.current);
@@ -78,46 +78,39 @@ export const Contact = () => {
     }
   };
 
-  const handleFirstPartMouseEnter = () => {
-    setIsFirstPartHovered(true);
-    handleMouseEnter();
-  };
-
-  const handleSecondPartMouseEnter = () => {
-    setIsSecondPartHovered(true);
+  const handleEmailPartMouseEnter = () => {
     handleMouseEnter();
   };
 
   const handleMouseLeave = () => {
     setIsHovering(false);
-    setIsFirstPartHovered(false);
-    setIsSecondPartHovered(false);
+    setIsEmailHovered(false);
 
-    // Låt cirkeln vara synlig en stund efter att musen lämnat för att fade-effekten ska synas
+    // Keep the circle visible for a moment after mouse leaves to show the fade effect
     circleTimeoutRef.current = setTimeout(() => {
       setIsVisible(false);
-    }, 300); // Matchar transition-tiden i CSS
+    }, 300); // Matches the transition time in CSS
   };
 
   const handleSocialMouseEnter = (social: string) => {
     setHoveredSocial(social);
 
-    // Rensa eventuell tidigare timeout för denna sociala länk
+    // Clear any previous timeout for this social link
     if (socialAnimationRefs.current[social]) {
       clearTimeout(socialAnimationRefs.current[social]);
     }
   };
 
   const handleSocialMouseLeave = (social: string) => {
-    // Låt animationen slutföras innan vi tar bort hover-tillståndet
+    // Let the animation complete before removing the hover state
     socialAnimationRefs.current[social] = setTimeout(() => {
       if (hoveredSocial === social) {
         setHoveredSocial(null);
       }
-    }, 1500); // Matchar animationstiden
+    }, 1500); // Matches the animation time
   };
 
-  // Rensa timeout vid unmount
+  // Clear timeouts on unmount
   useEffect(() => {
     return () => {
       if (circleTimeoutRef.current) {
@@ -132,7 +125,7 @@ export const Contact = () => {
     };
   }, []);
 
-  // Fortsätt spåra musen även utanför EmailLink om cirkeln är synlig
+  // Continue tracking mouse movement outside EmailLink if the circle is visible
   useEffect(() => {
     const handleGlobalMouseMove = (e: MouseEvent) => {
       if (isVisible && emailLinkRef.current) {
@@ -153,20 +146,20 @@ export const Contact = () => {
     };
   }, [isVisible]);
 
-  // Hantera klick utanför EmailLink för att behålla cirkeln när den är kopierad
+  // Handle clicks outside EmailLink to maintain the circle when copied
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent) => {
-      // Ignorera klick på EmailLink
+      // Ignore clicks on EmailLink
       if (emailLinkRef.current?.contains(e.target as Node)) {
         return;
       }
 
-      // Om vi har kopierat, behåll cirkeln
+      // If we've copied, keep the circle
       if (isCopied) {
         return;
       }
 
-      // Annars, dölj cirkeln om vi klickar utanför
+      // Otherwise, hide the circle if we click outside
       if (isVisible && !isHovering) {
         setIsVisible(false);
       }
@@ -181,11 +174,12 @@ export const Contact = () => {
   return (
     <ContactWrapper>
       <ContactContent>
-        <ContactTitle>Skicka ett meddelande</ContactTitle>
+        <ContactTitle>Send me a message</ContactTitle>
         <EmailLink
           ref={emailLinkRef}
           onClick={handleCopyEmail}
           onMouseMove={handleMouseMove}
+          onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           style={
             {
@@ -203,7 +197,7 @@ export const Contact = () => {
           <div
             className="email-part-wrapper"
             ref={firstPartRef}
-            onMouseEnter={handleFirstPartMouseEnter}
+            onMouseEnter={handleEmailPartMouseEnter}
           >
             <EmailFirstPart>MARIA.NYSTM</EmailFirstPart>
             <AnimatedUnderline
@@ -211,13 +205,13 @@ export const Contact = () => {
               color="var(--accent-color)"
               height="10px"
               className="email-underline"
-              isHovered={isFirstPartHovered}
+              isHovered={isEmailHovered}
             />
           </div>
           <div
             className="email-part-wrapper"
             ref={secondPartRef}
-            onMouseEnter={handleSecondPartMouseEnter}
+            onMouseEnter={handleEmailPartMouseEnter}
           >
             <EmailSecondPart>@GMAIL.COM</EmailSecondPart>
             <AnimatedUnderline
@@ -225,14 +219,18 @@ export const Contact = () => {
               color="var(--accent-color)"
               height="10px"
               className="email-underline"
-              isHovered={isSecondPartHovered}
+              isHovered={isEmailHovered}
             />
           </div>
         </EmailLink>
       </ContactContent>
 
       <SocialContent>
-        <SocialTitle>Eller kontakta mig här</SocialTitle>
+        <SocialTitle>
+          OR CONNECT WITH ME
+          <br />
+          ON SOCIALS
+        </SocialTitle>
         <SocialLinks>
           <SocialLink
             href="https://linkedin.com/in/yourusername"

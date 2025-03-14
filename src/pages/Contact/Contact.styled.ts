@@ -40,7 +40,7 @@ export const ContactWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30vh;
+  gap: 40vh;
 `;
 
 export const ContactContent = styled.div`
@@ -55,7 +55,7 @@ export const ContactTitle = styled.h2`
   font-family: "Poppins";
   font-size: 1.2rem;
   font-weight: 400;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-color);
   margin-bottom: 3rem;
@@ -115,7 +115,7 @@ export const EmailLink = styled.div`
 
   /* Cirkel-animation */
   &::before {
-    content: "KOPIERA";
+    content: "COPY";
     position: absolute;
     top: var(--mouse-y);
     left: var(--mouse-x);
@@ -150,7 +150,7 @@ export const EmailLink = styled.div`
   }
 
   &[data-copied="true"]::before {
-    content: "KLAR!";
+    content: "DONE!";
     animation: ${pulse} 1s cubic-bezier(0.45, 0, 0.55, 1) forwards;
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
@@ -179,7 +179,7 @@ export const SocialTitle = styled.h2`
   font-family: "Poppins";
   font-size: 1.2rem;
   font-weight: 400;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-color);
   margin-bottom: 3rem;
@@ -194,6 +194,7 @@ export const SocialLinks = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0;
+  margin-top: 0;
 `;
 
 export const SocialLink = styled.a`
