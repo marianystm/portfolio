@@ -98,9 +98,18 @@ export const EmailLink = styled.div`
     content: none;
   }
 
+  /* Wrapper för varje e-postdel */
+  .email-part-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+  }
+
   /* Anpassa styling för AnimatedUnderline */
   .email-underline {
-    margin-top: 15px;
+    margin-top: 5px;
+    margin-bottom: 15px;
     width: 100%;
   }
 
@@ -150,11 +159,12 @@ export const EmailLink = styled.div`
 
 export const EmailFirstPart = styled.span`
   display: block;
-  margin-bottom: -0.05em;
+  width: 100%;
 `;
 
 export const EmailSecondPart = styled.span`
   display: block;
+  width: 100%;
 `;
 
 export const SocialContent = styled.div`

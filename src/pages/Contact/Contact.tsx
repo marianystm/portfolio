@@ -18,9 +18,12 @@ export const Contact = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isEmailHovered, setIsEmailHovered] = useState(false);
+  const [isFirstPartHovered, setIsFirstPartHovered] = useState(false);
+  const [isSecondPartHovered, setIsSecondPartHovered] = useState(false);
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const emailLinkRef = useRef<HTMLDivElement>(null);
+  const firstPartRef = useRef<HTMLDivElement>(null);
+  const secondPartRef = useRef<HTMLDivElement>(null);
   const circleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const emailAnimationRef = useRef<NodeJS.Timeout | null>(null);
   const socialAnimationRefs = useRef<{ [key: string]: NodeJS.Timeout | null }>({
@@ -68,7 +71,6 @@ export const Contact = () => {
   const handleMouseEnter = () => {
     setIsVisible(true);
     setIsHovering(true);
-    setIsEmailHovered(true);
 
     if (circleTimeoutRef.current) {
       clearTimeout(circleTimeoutRef.current);
@@ -76,9 +78,21 @@ export const Contact = () => {
     }
   };
 
+  const handleFirstPartMouseEnter = () => {
+    setIsFirstPartHovered(true);
+    handleMouseEnter();
+  };
+
+  const handleSecondPartMouseEnter = () => {
+    setIsSecondPartHovered(true);
+    handleMouseEnter();
+  };
+
   const handleMouseLeave = () => {
     setIsHovering(false);
-    setIsEmailHovered(false);
+    setIsFirstPartHovered(false);
+    setIsSecondPartHovered(false);
+
     // Låt cirkeln vara synlig en stund efter att musen lämnat för att fade-effekten ska synas
     circleTimeoutRef.current = setTimeout(() => {
       setIsVisible(false);
@@ -172,7 +186,6 @@ export const Contact = () => {
           ref={emailLinkRef}
           onClick={handleCopyEmail}
           onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           style={
             {
@@ -187,15 +200,34 @@ export const Contact = () => {
           data-hovering={isHovering}
           data-visible={isVisible}
         >
-          <EmailFirstPart>MARIA.NYSTM</EmailFirstPart>
-          <EmailSecondPart>@GMAIL.COM</EmailSecondPart>
-          <AnimatedUnderline
-            width="100%"
-            color="var(--accent-color)"
-            height="10px"
-            className="email-underline"
-            isHovered={isEmailHovered}
-          />
+          <div
+            className="email-part-wrapper"
+            ref={firstPartRef}
+            onMouseEnter={handleFirstPartMouseEnter}
+          >
+            <EmailFirstPart>MARIA.NYSTM</EmailFirstPart>
+            <AnimatedUnderline
+              width="100%"
+              color="var(--accent-color)"
+              height="10px"
+              className="email-underline"
+              isHovered={isFirstPartHovered}
+            />
+          </div>
+          <div
+            className="email-part-wrapper"
+            ref={secondPartRef}
+            onMouseEnter={handleSecondPartMouseEnter}
+          >
+            <EmailSecondPart>@GMAIL.COM</EmailSecondPart>
+            <AnimatedUnderline
+              width="100%"
+              color="var(--accent-color)"
+              height="10px"
+              className="email-underline"
+              isHovered={isSecondPartHovered}
+            />
+          </div>
         </EmailLink>
       </ContactContent>
 
