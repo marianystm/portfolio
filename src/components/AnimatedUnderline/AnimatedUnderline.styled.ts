@@ -2,7 +2,7 @@ import styled, { keyframes, css } from "styled-components";
 
 const slideRightAnimation = keyframes`
   from {
-    left: -40px;
+    left: -50px;
   }
   to {
     left: 100%;
@@ -11,10 +11,10 @@ const slideRightAnimation = keyframes`
 
 const slideLeftAnimation = keyframes`
   from {
-    left: 100%;
+    left: var(--current-position);
   }
   to {
-    left: -40px;
+    left: -50px;
   }
 `;
 
@@ -35,26 +35,36 @@ export const StaticLine = styled.div`
 export const AnimatedLine = styled.div<{
   $isHovered: boolean;
   $hasInteracted: boolean;
+  $animationDirection: "right" | "left" | null;
 }>`
   position: absolute;
   top: 0;
-  width: 40px;
+  width: 50px;
   height: 100%;
   background: var(--background-color);
   pointer-events: none;
+  --current-position: 0%;
 
   /* Always visible after first interaction */
   opacity: ${({ $hasInteracted }) => ($hasInteracted ? 1 : 0)};
 
-  /* Animation based on hover state */
-  animation: ${({ $isHovered, $hasInteracted }) =>
-    $hasInteracted
-      ? $isHovered
-        ? css`
-            ${slideRightAnimation} 0.9s cubic-bezier(0.25, 0.1, 0.6, 1) forwards
-          `
-        : css`
-            ${slideLeftAnimation} 0.9s cubic-bezier(0.25, 0.1, 0.6, 1) forwards
-          `
-      : "none"};
+  /* Animation based on direction */
+  animation: ${({ $animationDirection, $hasInteracted }) => {
+    if (!$hasInteracted) return "none";
+
+    return $animationDirection === "right"
+      ? css`
+          ${slideRightAnimation} 0.9s cubic-bezier(0.25, 0.1, 0.6, 1) forwards
+        `
+      : css`
+          ${slideLeftAnimation} 0.9s cubic-bezier(0.25, 0.1, 0.6, 1) forwards
+        `;
+  }};
+
+  /* Pause animation when not hovering */
+  animation-play-state: ${({ $isHovered, $animationDirection }) =>
+    ($isHovered && $animationDirection === "right") ||
+    (!$isHovered && $animationDirection === "left")
+      ? "running"
+      : "paused"};
 `;

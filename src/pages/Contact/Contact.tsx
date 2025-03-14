@@ -30,14 +30,28 @@ export const Contact = () => {
 
   const handleCopyEmail = () => {
     const email = "maria.nystm@gmail.com";
+
+    // Säkerställ att cirkeln är synlig och i hover-tillstånd när vi kopierar
+    setIsVisible(true);
+    setIsHovering(true);
+    setIsCopied(true);
+
     navigator.clipboard
       .writeText(email)
       .then(() => {
-        setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000);
+        // Behåll cirkeln synlig i 2 sekunder
+        setTimeout(() => {
+          setIsCopied(false);
+          // Behåll hover-tillståndet om musen fortfarande är över länken
+          if (!emailLinkRef.current?.matches(":hover")) {
+            setIsHovering(false);
+          }
+        }, 2000);
       })
       .catch((err) => {
         console.error("Failed to copy: ", err);
+        setIsCopied(false);
+        setIsHovering(false);
       });
   };
 
@@ -125,6 +139,31 @@ export const Contact = () => {
     };
   }, [isVisible]);
 
+  // Hantera klick utanför EmailLink för att behålla cirkeln när den är kopierad
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      // Ignorera klick på EmailLink
+      if (emailLinkRef.current?.contains(e.target as Node)) {
+        return;
+      }
+
+      // Om vi har kopierat, behåll cirkeln
+      if (isCopied) {
+        return;
+      }
+
+      // Annars, dölj cirkeln om vi klickar utanför
+      if (isVisible && !isHovering) {
+        setIsVisible(false);
+      }
+    };
+
+    document.addEventListener("click", handleDocumentClick);
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, [isVisible, isHovering, isCopied]);
+
   return (
     <ContactWrapper>
       <ContactContent>
@@ -153,7 +192,6 @@ export const Contact = () => {
           <AnimatedUnderline
             width="100%"
             color="var(--accent-color)"
-            hoverColor="#ff69b4"
             height="10px"
             className="email-underline"
             isHovered={isEmailHovered}
@@ -175,7 +213,6 @@ export const Contact = () => {
             <AnimatedUnderline
               width="100%"
               color="var(--accent-color)"
-              hoverColor="#ff69b4"
               height="10px"
               className="social-underline"
               isHovered={hoveredSocial === "linkedin"}
@@ -192,7 +229,6 @@ export const Contact = () => {
             <AnimatedUnderline
               width="100%"
               color="var(--accent-color)"
-              hoverColor="#ff69b4"
               height="10px"
               className="social-underline"
               isHovered={hoveredSocial === "github"}
