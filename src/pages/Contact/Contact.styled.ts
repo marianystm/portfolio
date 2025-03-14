@@ -36,11 +36,9 @@ const circleFade = keyframes`
 
 export const ContactWrapper = styled.div`
   min-height: 100vh;
-  padding: 15rem 2rem 10rem;
+  padding: 2rem 2rem 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 40vh;
 `;
 
 export const ContactContent = styled.div`
@@ -48,7 +46,12 @@ export const ContactContent = styled.div`
   width: 100%;
   text-align: center;
   position: relative;
-  margin-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 4rem;
 `;
 
 export const ContactTitle = styled.h2`
@@ -59,10 +62,7 @@ export const ContactTitle = styled.h2`
   text-transform: uppercase;
   color: var(--text-color);
   margin-bottom: 3rem;
-  position: absolute;
-  width: 100%;
-  top: -5rem;
-  left: 0;
+  text-align: center;
 `;
 
 export const EmailLink = styled.div`
@@ -172,7 +172,12 @@ export const SocialContent = styled.div`
   width: 100%;
   text-align: center;
   position: relative;
-  margin-bottom: 10rem;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const SocialTitle = styled.h2`
@@ -183,10 +188,7 @@ export const SocialTitle = styled.h2`
   text-transform: uppercase;
   color: var(--text-color);
   margin-bottom: 3rem;
-  position: absolute;
-  width: 100%;
-  top: -5rem;
-  left: 0;
+  text-align: center;
 `;
 
 export const SocialLinks = styled.div`

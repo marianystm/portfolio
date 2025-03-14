@@ -12,6 +12,7 @@ import {
   SocialLink,
 } from "./Contact.styled";
 import { AnimatedUnderline } from "../../components/AnimatedUnderline/AnimatedUnderline";
+import { HeaderSection, InfoItem } from "../About/About.styled";
 
 export const Contact = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -173,8 +174,37 @@ export const Contact = () => {
 
   return (
     <ContactWrapper>
-      <ContactContent>
-        <ContactTitle>Send me a message</ContactTitle>
+      <HeaderSection>
+        <InfoItem>
+          <h3>MARIA NYSTRÖM</h3>
+        </InfoItem>
+
+        <InfoItem>
+          <h3>
+            DEVELOPER
+            <br />
+            AT{" "}
+            <a
+              href="https://www.wndy.se/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WNDY.SE
+            </a>
+          </h3>
+        </InfoItem>
+
+        <InfoItem>
+          <h3>
+            BASED IN
+            <br />
+            STOCKHOLM
+          </h3>
+        </InfoItem>
+      </HeaderSection>
+
+      <ContactContent style={{ flex: 1 }}>
+        <ContactTitle>SEND ME A MESSAGE</ContactTitle>
         <EmailLink
           ref={emailLinkRef}
           onClick={handleCopyEmail}

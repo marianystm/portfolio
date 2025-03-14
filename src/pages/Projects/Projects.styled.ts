@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 export const ProjectsWrapper = styled.div`
-  padding: 6rem 2rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  min-height: 100vh;
+  padding: 2rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
 
   h1 {
     margin-bottom: 2rem;
