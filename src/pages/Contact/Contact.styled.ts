@@ -51,7 +51,7 @@ export const ContactContent = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  margin-top: 4rem;
+  margin-top: 7rem;
 `;
 
 export const ContactTitle = styled.h2`
@@ -172,7 +172,7 @@ export const SocialContent = styled.div`
   width: 100%;
   text-align: center;
   position: relative;
-  margin-top: 4rem;
+  margin-top: 8rem;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,4 +1,18 @@
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+
+export const GlobalStyle = createGlobalStyle`
+  .no-hover {
+    &:hover, &:focus, &:active {
+      color: inherit !important;
+      text-decoration: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      background: none !important;
+      border: none !important;
+      outline: none !important;
+    }
+  }
+`;
 
 export const AboutWrapper = styled.div`
   min-height: 100vh;
@@ -40,7 +54,7 @@ export const InfoItem = styled.div`
     text-transform: uppercase;
   }
 
-  a {
+  a:not(.no-hover) {
     color: var(--text-color);
     text-decoration: none;
     position: relative;

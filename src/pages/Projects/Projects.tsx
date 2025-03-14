@@ -4,14 +4,28 @@ import {
   ProjectCard,
   ProjectTitle,
 } from "./Projects.styled";
-import { HeaderSection, InfoItem } from "../About/About.styled";
+import { HeaderSection, InfoItem, GlobalStyle } from "../About/About.styled";
 
 export const Projects = () => {
   return (
     <ProjectsWrapper>
+      <GlobalStyle />
       <HeaderSection>
         <InfoItem>
-          <h3>MARIA NYSTRÖM</h3>
+          <h3>
+            <a
+              href="/"
+              style={{
+                color: "inherit",
+                textDecoration: "none",
+                pointerEvents: "auto",
+                cursor: "pointer",
+              }}
+              className="no-hover"
+            >
+              MARIA NYSTRÖM
+            </a>
+          </h3>
         </InfoItem>
 
         <InfoItem>

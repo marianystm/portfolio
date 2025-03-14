@@ -8,14 +8,29 @@ import {
   Subtitle,
   HeaderSection,
   InfoItem,
+  GlobalStyle,
 } from "./About.styled";
 
 export const About = () => {
   return (
     <AboutWrapper>
+      <GlobalStyle />
       <HeaderSection>
         <InfoItem>
-          <h3>MARIA NYSTRÖM</h3>
+          <h3>
+            <a
+              href="/"
+              style={{
+                color: "inherit",
+                textDecoration: "none",
+                pointerEvents: "auto",
+                cursor: "pointer",
+              }}
+              className="no-hover"
+            >
+              MARIA NYSTRÖM
+            </a>
+          </h3>
         </InfoItem>
 
         <InfoItem>

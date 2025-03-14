@@ -12,7 +12,7 @@ import {
   SocialLink,
 } from "./Contact.styled";
 import { AnimatedUnderline } from "../../components/AnimatedUnderline/AnimatedUnderline";
-import { HeaderSection, InfoItem } from "../About/About.styled";
+import { HeaderSection, InfoItem, GlobalStyle } from "../About/About.styled";
 
 export const Contact = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -174,9 +174,23 @@ export const Contact = () => {
 
   return (
     <ContactWrapper>
+      <GlobalStyle />
       <HeaderSection>
         <InfoItem>
-          <h3>MARIA NYSTRÖM</h3>
+          <h3>
+            <a
+              href="/"
+              style={{
+                color: "inherit",
+                textDecoration: "none",
+                pointerEvents: "auto",
+                cursor: "pointer",
+              }}
+              className="no-hover"
+            >
+              MARIA NYSTRÖM
+            </a>
+          </h3>
         </InfoItem>
 
         <InfoItem>
